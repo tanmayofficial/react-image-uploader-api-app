@@ -1,0 +1,11 @@
+.custom-brand {
+  height: 2rem;
+  width: 10rem;
+  font-size: 2rem;
+  color: wheat;
+  border-bottom: 40px solid #333;
+  border-left: 20px solid transparent;
+  border-right: 20px solid transparent;
+}
+.trapezoid {
+}
