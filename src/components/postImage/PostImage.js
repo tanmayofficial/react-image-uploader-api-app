@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import axios from "axios";
 
 const PostImage = () => {
@@ -14,30 +14,48 @@ const PostImage = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const url = "https://api.imgur.com/3/image";
-
     const formData = new FormData();
-    formData.append("orunSTu", upload, upload.id);
-    formData.append("id", "demo");
-    let response = await axios.post(url, formData);
-    console.log(response);
+    formData.append("uploadFile", upload);
+    const getUrl = document.getElementById("url");
+
+    const url = "https://api.imgur.com/3/image/";
+
+    axios
+      .post(url, {
+        headers: {
+          Authorization: "Client-ID {{3c183b64abaedc1}}",
+        },
+        body: formData,
+      })
+      .then((response, data) => {
+        console.log(response);
+        getUrl.innerText = data.data.link;
+      })
+      .catch((error) => {
+        console.log(error);
+      });
   };
 
   return (
     <form onSubmit={handleSubmit}>
-      <div className="container mt-5">
+      <div className="container mt-3">
         <div className="m-auto w-50">
           <input
             type="file"
             className="form-control my-2"
-            id="orunSTu"
+            id="uploadFile"
             onChange={uploadHandler}
           />
-          <input
+          <button
             type="submit"
-            value="upload"
+            value=""
             className="form-control btn btn-primary my-2"
-          />
+          >
+            upload
+          </button>
+        </div>
+        <div className="w-25 img-fluid">
+          <p className="url"></p>
         </div>
       </div>
     </form>
